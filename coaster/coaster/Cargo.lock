@@ -1,0 +1,14 @@
+[[package]]
+name = "coaster"
+version = "0.1.0"
+dependencies = [
+ "std-semaphore 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "std-semaphore"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum std-semaphore 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "33ae9eec00137a8eed469fb4148acd9fc6ac8c3f9b110f52cd34698c8b5bfa0e"

@@ -1,0 +1,8 @@
+[package]
+name = "bfs"
+version = "0.1.0"
+authors = ["teals"]
+
+[dependencies]
+std-semaphore = "0.1.0"
+queues = "1.0.0"
