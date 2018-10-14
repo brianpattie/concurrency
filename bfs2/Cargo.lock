@@ -1,0 +1,21 @@
+[[package]]
+name = "bfs2"
+version = "0.1.0"
+dependencies = [
+ "queues 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "std-semaphore 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "queues"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "std-semaphore"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum queues 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "9efcfc3b0ebac38c59b176b39833d5284e705b11da2dab595921640977cf1d18"
+"checksum std-semaphore 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "33ae9eec00137a8eed469fb4148acd9fc6ac8c3f9b110f52cd34698c8b5bfa0e"

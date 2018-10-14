@@ -1,0 +1,8 @@
+[package]
+name = "bfs2"
+version = "0.1.0"
+authors = ["Brian Pattie <bpattie@uvic.ca>"]
+
+[dependencies]
+std-semaphore = "0.1.0"
+queues = "1.0.0"
