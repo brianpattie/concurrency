@@ -43,7 +43,7 @@ class Elf(threading.Thread):
 
         # time.sleep(random.randrange(0,3))
 
-        arrival = time.time_ns();
+        # arrival = time.time_ns();
 
         self.counter.lock.acquire()
         self.counter.inc_elves(1)
@@ -68,16 +68,15 @@ class Elf(threading.Thread):
 
         self.elf_queue.acquire()
 
-        # print("Elf:" + str(self.id) + " Boarding")
+        print("Elf:" + str(self.id) + " Boarding")
         self.barrier.wait()
 
         if self.captain:
-            # print("Elf:" + str(self.id) + " Rowing")
+            print("Elf:" + str(self.id) + " Rowing")
             self.counter.lock.release()
 
-        departure = time.time_ns();
-
-        print(str((departure - arrival)));
+        # departure = time.time_ns();
+        # print(str((departure - arrival)));
 
 class Orc(threading.Thread):
 
@@ -94,7 +93,7 @@ class Orc(threading.Thread):
 
         # time.sleep(random.randrange(0,3))
 
-        arrival = time.time_ns();
+        # arrival = time.time_ns();
 
         self.counter.lock.acquire()
         self.counter.inc_orcs(1)
@@ -119,15 +118,15 @@ class Orc(threading.Thread):
 
         self.orc_queue.acquire()
 
-        # print("Orc:" + str(self.id) + " Boarding")
+        print("Orc:" + str(self.id) + " Boarding")
         self.barrier.wait()
 
         if self.captain:
-            # print("Orc:" + str(self.id) + " Rowing")
+            print("Orc:" + str(self.id) + " Rowing")
             self.counter.lock.release()
 
-        departure = time.time_ns();
-        print(str((departure - arrival)));
+        # departure = time.time_ns();
+        # print(str((departure - arrival)));
 
 
 def RiverCrossing():
@@ -139,7 +138,7 @@ def RiverCrossing():
 
     people = []
     print("Test 1")
-    for i in range(20):
+    for i in range(50):
         people.append(Elf(i, counter, elf_queue, orc_queue, barrier))
         people.append(Orc(i, counter, elf_queue, orc_queue, barrier))
 

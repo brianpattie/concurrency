@@ -63,10 +63,13 @@ func (d *Diner) philosopher(id int){
             continue
         }
 
+        fmt.Println(strconv.Itoa(id) + " eating")
+
         d.done[id] <- true
         d.done[((id + 1) % d.num_phil)] <- true
 
         fmt.Println(strconv.Itoa(id) + " thinking")
+        time.Sleep(time.Millisecond*5)
     }
 }
 
@@ -103,12 +106,6 @@ func (d* Diner) start() {
     go d.philosopher(3)
     go d.philosopher(4)
 
-    // for i:=0; i<d.num_phil - 1; i++ {
-    //     go d.fork(i)
-    //     go d.philosopher(i, true)
-    // }
-    // go d.fork(d.num_phil - 1)
-    // go d.philosopher(d.num_phil - 1, false)
 }
 
 func main(){
@@ -118,6 +115,7 @@ func main(){
     d := createDiner(5)
     d.start()
 
-    time.Sleep(time.Millisecond*5)
+    time.Sleep(time.Millisecond*5000)
+    // time.Sleep(5)
     fmt.Println("end of main")
 }

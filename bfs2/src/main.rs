@@ -4,7 +4,6 @@ extern crate queues;
 use std::thread;
 use std::sync::{RwLock, Mutex, Arc};
 use std_semaphore::Semaphore;
-// use std::time::Duration;
 use std::time::Instant;
 use queues::*;
 
@@ -60,7 +59,7 @@ fn main() {
     f_items.release();
     drop(f);
 
-    let begin = Instant::now();
+    // let begin = Instant::now();
 
     // Begin thread creation loop
     for _i in 0..THREADS {
@@ -132,8 +131,8 @@ fn main() {
     }
 
     success.acquire();
-    let elapsed = begin.elapsed();
-    println!("{:?}", ((elapsed.as_secs() as u32 * 1_000_000_000 + elapsed.subsec_nanos()) as u32));
+    // let elapsed = begin.elapsed();
+    // println!("{:?}", ((elapsed.as_secs() as u32 * 1_000_000_000 + elapsed.subsec_nanos()) as u32));
     println!("Solution Found");
 
 }

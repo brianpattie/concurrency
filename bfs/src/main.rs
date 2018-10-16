@@ -56,7 +56,7 @@ fn main() {
 
     // println!("beginning loop");
 
-    let begin = Instant::now();
+    // let begin = Instant::now();
 
     loop {
 
@@ -124,8 +124,8 @@ fn main() {
         }
         let mut suc = success.lock().unwrap();
         if *suc == true {
-            let elapsed = begin.elapsed();
-            println!("{:?}", ((elapsed.as_secs() as u32 * 1_000_000_000 + elapsed.subsec_nanos()) as u32));
+            // let elapsed = begin.elapsed();
+            // println!("{:?}", ((elapsed.as_secs() as u32 * 1_000_000_000 + elapsed.subsec_nanos()) as u32));
             break;
         }
         drop(suc);

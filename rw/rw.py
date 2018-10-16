@@ -16,9 +16,9 @@ class Reader(threading.Thread):
 
     def run(self):
 
-        n = 0
-        ct = 0
-        wt = 0
+        # n = 0
+        # ct = 0
+        # wt = 0
 
         wb = int(round(time.time() * 1000));
         while self.running:
@@ -30,26 +30,26 @@ class Reader(threading.Thread):
             if self.counter.val == 1:
                 self.roomempty.acquire()
             self.counter.lock.release()
-            cb = int(round(time.time() * 1000));
+            # cb = int(round(time.time() * 1000));
 
             #Read start
-            self.val = self.book.val
-            # print('Reader ' + str(self.num) + ' read ' + str(self.book.val))
+            # self.val = self.book.val
+            print('Reader ' + str(self.num) + ' read ' + str(self.book.val))
             #Read end
-            ce = int(round(time.time() * 1000));
-            ct += ce - cb
-            wt += cb - wb
+            # ce = int(round(time.time() * 1000));
+            # ct += ce - cb
+            # wt += cb - wb
 
             self.counter.lock.acquire(True)
             self.counter.dec()
             if self.counter.val == 0:
                 self.roomempty.release()
             self.counter.lock.release()
-            wb = int(round(time.time() * 1000));
-            n += 1
+            # wb = int(round(time.time() * 1000));
+            # n += 1
 
-        print('Reader ' + str(self.num) + ' Crit ' + str(ct / n))
-        print('Reader ' + str(self.num) + ' Wait ' + str(wt / n))
+        # print('Reader ' + str(self.num) + ' Crit ' + str(ct / n))
+        # print('Reader ' + str(self.num) + ' Wait ' + str(wt / n))
 
 
 class Writer(threading.Thread):
@@ -65,31 +65,31 @@ class Writer(threading.Thread):
 
     def run(self):
         # print('Writer ' + str(self.num) + ' running')
-        n = 0
-        ct = 0
-        wt = 0
+        # n = 0
+        # ct = 0
+        # wt = 0
 
-        wb = int(round(time.time() * 1000));
+        # wb = int(round(time.time() * 1000));
         while self.running:
             self.turnstile.acquire(True)
 
             self.roomempty.acquire(True)
-            cb = int(round(time.time() * 1000));
+            # cb = int(round(time.time() * 1000));
 
             self.book.inc()
             # print('Writer ' + str(self.num) + ' wrote ' + str(self.book.val))
-            ce = int(round(time.time() * 1000));
+            # ce = int(round(time.time() * 1000));
 
-            ct += ce - cb
-            wt += cb - wb
+            # ct += ce - cb
+            # wt += cb - wb
 
             self.turnstile.release()
             self.roomempty.release()
-            wb = int(round(time.time() * 1000));
-            n += 1
+            # wb = int(round(time.time() * 1000));
+            # n += 1
 
-        print('Writer ' + str(self.num) + ' Crit ' + str(ct / n))
-        print('Writer ' + str(self.num) + ' Wait ' + str(wt / n))
+        # print('Writer ' + str(self.num) + ' Crit ' + str(ct / n))
+        # print('Writer ' + str(self.num) + ' Wait ' + str(wt / n))
 
 
 class Counter():

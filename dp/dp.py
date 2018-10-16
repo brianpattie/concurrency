@@ -17,7 +17,7 @@ class Philosopher(threading.Thread):
         while self.running:
             print('%s is thinking' % self.name)
             time.sleep(1)
-            print('%s is hungry' % self.name)
+            # print('%s is hungry' % self.name)
             self.dine()
 
     def dine(self):
@@ -37,9 +37,9 @@ class Philosopher(threading.Thread):
         fork2.release()
 
     def eating(self):
-        print('%s starts eating' % self.name)
+        print('%s is eating' % self.name)
         time.sleep(1)
-        print('%s finishes eating' % self.name)
+        # print('%s finishes eating' % self.name)
 
 
 def DiningPhilosophers():
