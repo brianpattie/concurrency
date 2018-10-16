@@ -3,6 +3,7 @@ extern crate std_semaphore;
 use std::thread;
 use std::sync::{Mutex, Arc};
 use std_semaphore::Semaphore;
+use std::time::Instant;
 
 fn main() {
 
@@ -20,7 +21,7 @@ fn main() {
     let board_count = Arc::new(Mutex::new(0));
     let disembark = Arc::new(Semaphore::new(0));
 
-    // Create Elf Threads.
+    // Create Elf Threads
     for i in 0..n_e {
 
         let e_c = elf_count.clone();
@@ -31,6 +32,8 @@ fn main() {
         let d   = disembark.clone();
 
         let e_handle = thread::spawn(move || {
+
+            let arrival = Instant::now();
 
             let mut elf_c = e_c.lock().unwrap();
             let mut orc_c = o_c.lock().unwrap();
@@ -46,7 +49,7 @@ fn main() {
                 let mut board_c = b_c.lock().unwrap();
                 *board_c += 1;
 
-                println!("Elf:{} Boarding as crew {}", i, *board_c);
+                // println!("Elf:{} Boarding as crew {}", i, *board_c);
 
                 if *board_c == 3 {
                     *board_c = 0;
@@ -64,7 +67,7 @@ fn main() {
                     let mut board_c = b_c.lock().unwrap();
                     *board_c += 1;
 
-                    println!("Elf:{} Boarding as crew {}", i, *board_c);
+                    // println!("Elf:{} Boarding as crew {}", i, *board_c);
 
                     if *board_c == 3 {
                         d.release();
@@ -79,8 +82,8 @@ fn main() {
                     *orc_c -= 2;
 
                     d.acquire();
-                    println!("Elf:{} Boarding as captain", i);
-                    println!("Elf:{} Rowing", i);
+                    // println!("Elf:{} Boarding as captain", i);
+                    // println!("Elf:{} Rowing", i);
                 }
 
             } else { // Enough Elves to go as 4
@@ -90,10 +93,14 @@ fn main() {
                 *elf_c -= 4;
 
                 d.acquire();
-                println!("Elf:{} Boarding as captain", i);
-                println!("Elf:{} Rowing", i);
+                // println!("Elf:{} Boarding as captain", i);
+                // println!("Elf:{} Rowing", i);
 
             }
+
+            let elapsed = arrival.elapsed();
+            println!("{:?}", ((elapsed.as_secs() as u32 * 1_000_000_000 + elapsed.subsec_nanos()) as u32));
+
         });
         handles.push(e_handle);
     }
@@ -110,6 +117,8 @@ fn main() {
 
         let o_handle = thread::spawn(move || {
 
+            let arrival = Instant::now();
+
             let mut elf_c = e_c.lock().unwrap();
             let mut orc_c = o_c.lock().unwrap();
 
@@ -124,7 +133,7 @@ fn main() {
                 let mut board_c = b_c.lock().unwrap();
                 *board_c += 1;
 
-                println!("Orc:{} Boarding as crew {}", i, *board_c);
+                // println!("Orc:{} Boarding as crew {}", i, *board_c);
 
                 if *board_c == 3 {
                     *board_c = 0;
@@ -142,7 +151,7 @@ fn main() {
                     let mut board_c = b_c.lock().unwrap();
                     *board_c += 1;
 
-                    println!("Orc:{} Boarding as crew {}", i, *board_c);
+                    // println!("Orc:{} Boarding as crew {}", i, *board_c);
 
                     if *board_c == 3 {
                         *board_c = 0;
@@ -156,8 +165,8 @@ fn main() {
                     *orc_c -= 2;
 
                     d.acquire();
-                    println!("Orc:{} Boarding as captain", i);
-                    println!("Orc:{} Rowing", i);
+                    // println!("Orc:{} Boarding as captain", i);
+                    // println!("Orc:{} Rowing", i);
                 }
 
             } else { // Enough Orcs to go as 4
@@ -167,9 +176,13 @@ fn main() {
                 *orc_c -= 4;
 
                 d.acquire();
-                println!("Orc:{} Boarding as captain", i);
-                println!("Orc:{} Rowing", i);
+                // println!("Orc:{} Boarding as captain", i);
+                // println!("Orc:{} Rowing", i);
             }
+
+            let elapsed = arrival.elapsed();
+            println!("{:?}", ((elapsed.as_secs() as u32 * 1_000_000_000 + elapsed.subsec_nanos()) as u32));
+
         });
         handles.push(o_handle);
     }

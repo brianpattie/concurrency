@@ -1,6 +1,7 @@
 import threading
 import time
 import random
+from datetime import datetime
 
 class Counter():
 
@@ -40,7 +41,9 @@ class Elf(threading.Thread):
 
     def run(self):
 
-        time.sleep(random.randrange(0,3))
+        # time.sleep(random.randrange(0,3))
+
+        arrival = time.time_ns();
 
         self.counter.lock.acquire()
         self.counter.inc_elves(1)
@@ -65,12 +68,16 @@ class Elf(threading.Thread):
 
         self.elf_queue.acquire()
 
-        print("Elf:" + str(self.id) + " Boarding")
+        # print("Elf:" + str(self.id) + " Boarding")
         self.barrier.wait()
 
         if self.captain:
-            print("Elf:" + str(self.id) + " Rowing")
+            # print("Elf:" + str(self.id) + " Rowing")
             self.counter.lock.release()
+
+        departure = time.time_ns();
+
+        print(str((departure - arrival)));
 
 class Orc(threading.Thread):
 
@@ -85,7 +92,9 @@ class Orc(threading.Thread):
 
     def run(self):
 
-        time.sleep(random.randrange(0,3))
+        # time.sleep(random.randrange(0,3))
+
+        arrival = time.time_ns();
 
         self.counter.lock.acquire()
         self.counter.inc_orcs(1)
@@ -110,12 +119,15 @@ class Orc(threading.Thread):
 
         self.orc_queue.acquire()
 
-        print("Orc:" + str(self.id) + " Boarding")
+        # print("Orc:" + str(self.id) + " Boarding")
         self.barrier.wait()
 
         if self.captain:
-            print("Orc:" + str(self.id) + " Rowing")
+            # print("Orc:" + str(self.id) + " Rowing")
             self.counter.lock.release()
+
+        departure = time.time_ns();
+        print(str((departure - arrival)));
 
 
 def RiverCrossing():

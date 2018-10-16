@@ -13,49 +13,32 @@ fn main() {
 
     let mut handles = vec![];
 
-    let board_count   = Arc::new(Mutex::new(0));
-    let unboard_count = Arc::new(Mutex::new(0));
-
     let board_queue   = Arc::new(Semaphore::new(0));
     let unboard_queue = Arc::new(Semaphore::new(0));
-    let full  = Arc::new(Semaphore::new(0));
-    let empty = Arc::new(Semaphore::new(0));
+    let load_queue  = Arc::new(Semaphore::new(0));
+    let unload_queue = Arc::new(Semaphore::new(0));
 
     // Create Passenger Threads.
     for i in 0..n_p {
 
-        let b_c = board_count.clone();
-        let ub_c = unboard_count.clone();
+        let l_q = load_queue.clone();
         let b_q = board_queue.clone();
+        let ul_q = unload_queue.clone();
         let ub_q = unboard_queue.clone();
-        let f = full.clone();
-        let e = empty.clone();
 
         let p_handle = thread::spawn(move || {
 
-            //Boarding
-            b_q.acquire();
+            l_q.acquire();
 
-            let mut board_c = b_c.lock().unwrap();
             println!("Passenger: {} boarded", i);
-            *board_c += 1;
-            if *board_c == CAP {
-                f.release();
-                *board_c = 0;
-            }
-            drop(board_c);
 
-            //Unboarding
-            ub_q.acquire();
+            b_q.release();
 
-            let mut unboard_c = ub_c.lock().unwrap();
+            ul_q.acquire();
+
             println!("Passenger: {} unboarded", i);
-            *unboard_c += 1;
-            if *unboard_c == CAP {
-                e.release();
-                *unboard_c = 0;
-            }
-            drop(unboard_c);
+
+            ub_q.release();
 
         });
         handles.push(p_handle);
@@ -66,34 +49,37 @@ fn main() {
 
         let b_q = board_queue.clone();
         let ub_q = unboard_queue.clone();
-        let f = full.clone();
-        let e = empty.clone();
+        let l_q = load_queue.clone();
+        let ul_q = unload_queue.clone();
 
-        /*let r_handle = */thread::spawn(move || {
+        thread::spawn(move || {
 
             loop {
                 println!("Rollercoaster Loading");
                 for _i in 0..CAP {
-                    b_q.release();
+                    l_q.release();
                 }
 
-                f.acquire();
+                for _i in 0..CAP {
+                    b_q.acquire();
+                }
 
                 println!("Rollercoaster Running");
                 thread::sleep(Duration::from_millis(100));
                 println!("Rollercoaster Unloading");
 
                 for _i in 0..CAP {
-                    ub_q.release();
+                    ul_q.release();
                 }
 
-                e.acquire();
+                for _i in 0..CAP {
+                    ub_q.acquire();
+                }
 
                 thread::sleep(Duration::from_millis(1000));
             }
 
         });
-        // handles.push(r_handle);
     }
 
     for handle in handles {

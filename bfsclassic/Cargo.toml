@@ -1,0 +1,7 @@
+[package]
+name = "bfsclassic"
+version = "0.1.0"
+authors = ["Brian Pattie <bpattie@uvic.ca>"]
+
+[dependencies]
+queues = "1.0.0"

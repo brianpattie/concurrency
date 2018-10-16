@@ -1,0 +1,14 @@
+[[package]]
+name = "bfsclassic"
+version = "0.1.0"
+dependencies = [
+ "queues 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "queues"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[metadata]
+"checksum queues 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "9efcfc3b0ebac38c59b176b39833d5284e705b11da2dab595921640977cf1d18"
