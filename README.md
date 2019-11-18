@@ -1,6 +1,6 @@
 # concurrency
 
-This repo contains solutions to a series of toy concurrency problems taken from The Little Book of Semaphores by Allen B. Downey.  These were written as part of an assignment for my Concurrency course at the University of Victoria.
+This repo contains solutions to a series of toy concurrency problems taken from The Little Book of Semaphores by Allen B. Downey.
 
 The folders' contents are as follows:
 1) bfs - A Rust implementation of a multithreaded breadth-first search algorithm. New threads are spawned to explore each new node, after which they terminate.
